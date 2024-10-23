@@ -1,86 +1,59 @@
-#!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-import debugLib from 'debug';
 import config from '../config';
 import * as http from 'http';
-import app from '../app';
+import app, { startDatabase } from '../app';
+import { Utils } from '../application/utils/utils.service';
 
-const debug = debugLib('bdb:server');
 
-/**
- * Get port from environment and store in Express.
- */
-
-const port = normalizePort(config.PORT);
+const port = normalizePort(Number(config.PORT));
+if (!port) {
+    Utils.LOGGER.error(`Invalid port: ${config.PORT}`);
+    process.exit(1);
+}
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
+const server = http.createServer(app);
 
-const www = http.createServer(app);
+startDatabase().then(() => {
+    server.listen(port);
+    server.on('error', onError);
+    server.on('listening', onListening);
+}).catch(err => {
+    Utils.LOGGER.error('Error initializing the database:', err);
+    process.exit(1);
+});
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+function normalizePort(val: number) {
+    const nPort = typeof val === 'number' ? val : parseInt(val, 10);
 
-www.listen(port);
-www.on('error', onError);
-www.on('listening', onListening);
+    if (isNaN(nPort) || nPort < 0) {
+        return false;
+    }
 
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val: string) {
-	const nPort = parseInt(val, 10);
-
-	if (isNaN(nPort)) {
-		return val;
-	}
-
-	if (nPort >= 0) {
-		return nPort;
-	}
-
-	return false;
+    return nPort;
 }
-
-/**
- * Event listener for HTTP server 'errors' event.
- */
 
 function onError(error: any) {
-	if (error.syscall !== 'listen') {
-		throw error;
-	}
-
-	const bind = typeof port === 'string' ? `Pipe ${port}` : `Port ${port}`;
-
-	// handle specific listen errors with friendly messages
-	switch (error.code) {
-		case 'EACCES':
-			debug(`${bind}  requires elevated privileges`);
-			process.exit(1);
-			break;
-		case 'EADDRINUSE':
-			debug(`${bind}  is already in use`);
-			process.exit(1);
-			break;
-		default:
-			throw error;
-	}
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
+    const bind = typeof port === 'string' ? `Pipe ${port}` : `Port ${port}`;
+    switch (error.code) {
+        case 'EACCES':
+            Utils.LOGGER.error(`${bind} requires elevated privileges`);
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            Utils.LOGGER.error(`${bind} is already in use`);
+            process.exit(1);
+            break;
+        default:
+            throw error;
+    }
 }
 
-/**
- * Event listener for HTTP server 'listening' event.
- */
-
 function onListening() {
-	const address = www.address();
-	const bind = typeof address === 'string' ? `pipe ${address}` : `port ${(address as any).port}`;
-	debug(`Listening on ${bind}`);
+    const address = server.address();
+    const bind = typeof address === 'string' ? `pipe ${address}` : `port ${(address as any).port}`;
+    Utils.LOGGER.info(`Listening on ${bind}`);
+    
 }

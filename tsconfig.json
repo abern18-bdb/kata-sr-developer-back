@@ -1,6 +1,11 @@
 {
 	"compilerOptions": {
 		"baseUrl": "./src",
+		"paths": {
+			"@test/*": ["test/*"],
+			"@src/*": ["./src/*"],
+			"@services/*": ["./src/application/services/*"]
+		},
 		"target": "es6" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */,
 		"module": "commonjs" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
 		"outDir": "./dist" /* Redirect output structure to the directory. */,
@@ -9,7 +14,7 @@
 		"moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
 		"types": [
 			"reflect-metadata",
-			"mocha",
+			"jest",
 			"node"
 		] /* Type declaration files to be included in compilation. */,
 		"resolveJsonModule": true,
@@ -18,5 +23,6 @@
 		"emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
 		"skipLibCheck": true /* Skip type checking of declaration files. */,
 		"forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
-	}
+	},
+	"include": ["src/**/*", "test/**/*"]
 }
