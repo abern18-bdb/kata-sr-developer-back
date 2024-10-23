@@ -60,7 +60,7 @@ describe('taskService', () => {
 
             expect(db.get).toHaveBeenCalledWith('SELECT * FROM tasks WHERE id = ?', [taskId]);
             expect(db.run).toHaveBeenCalledWith(
-                'UPDATE tasks SET title = ?, description = ?, "status" = true, user_name = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+                'UPDATE tasks SET title = ?, description = ?, user_name = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
                 [taskData.title, taskData.description, user, taskId]
             );
             expect(result).toEqual({ id: taskId, title: 'Updated Task', description: 'Updated Description' });

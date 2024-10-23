@@ -8,7 +8,7 @@ export const loginController = {
 
     if (
       (username === "admin" && password === "admin") ||
-      (username === "otro_user" && password === "otro_user")
+      (username === "otroUser" && password === "otroUser")
     ) {
       //const token = jwt.sign({ user: username }, "secret_token", { expiresIn: '5m' });
       const token = jwt.sign({ user: username }, "secret_token", { expiresIn: '1h' });

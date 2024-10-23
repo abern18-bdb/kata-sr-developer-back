@@ -13,8 +13,8 @@
 	],
 	"components": {
 	  "parameters": {
-		"X-Name": {
-		  "name": "x-Name",
+		"X-User": {
+		  "name": "x-user",
 		  "in": "header",
 		  "required": true,
 		  "schema": {
@@ -37,7 +37,7 @@
 		  "summary": "Crear una nueva tarea",
 		  "operationId": "createTask",
 		  "parameters": [
-			{ "$ref": "#/components/parameters/X-Name" },
+			{ "$ref": "#/components/parameters/X-User" },
 			{ "$ref": "#/components/parameters/Authorization" }
 		  ],
 		  "requestBody": {
@@ -82,7 +82,6 @@
 		  "summary": "Listar todas las tareas",
 		  "operationId": "getTasks",
 		  "parameters": [
-			{ "$ref": "#/components/parameters/X-Name" },
 			{ "$ref": "#/components/parameters/Authorization" }
 		  ],
 		  "responses": {
@@ -98,7 +97,6 @@
 						"id": { "type": "integer" },
 						"title": { "type": "string" },
 						"description": { "type": "string" },
-						"status": { "type": "boolean" },
 						"user_name": { "type": "string" },
 						"created_at": { "type": "string", "format": "date-time" },
 						"updated_at": { "type": "string", "format": "date-time" }
@@ -119,7 +117,7 @@
 		  "summary": "Actualizar una tarea existente",
 		  "operationId": "updateTask",
 		  "parameters": [
-			{ "$ref": "#/components/parameters/X-Name" },
+			{ "$ref": "#/components/parameters/X-User" },
 			{ "$ref": "#/components/parameters/Authorization" },
 			{
 			  "name": "id",
@@ -174,7 +172,6 @@
 		  "summary": "Eliminar una tarea",
 		  "operationId": "deleteTask",
 		  "parameters": [
-			{ "$ref": "#/components/parameters/X-Name" },
 			{ "$ref": "#/components/parameters/Authorization" },
 			{
 			  "name": "id",

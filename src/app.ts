@@ -6,8 +6,10 @@ import swaggerUi from 'swagger-ui-express';
 import fs from 'fs';
 import path from 'path';
 import { Utils } from './application/utils/utils.service';
+import cors from 'cors';
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 app.use(CONFIG.CONTEXT, TaskRouter);

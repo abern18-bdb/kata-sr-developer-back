@@ -27,7 +27,7 @@ export const taskService = {
     }
 
     const { title, description } = taskData;
-    await db.run('UPDATE tasks SET title = ?, description = ?, "status" = true, user_name = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?', [title, description, user, id]);
+    await db.run('UPDATE tasks SET title = ?, description = ?, user_name = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?', [title, description, user, id]);
     return { id, title, description };
   },
 

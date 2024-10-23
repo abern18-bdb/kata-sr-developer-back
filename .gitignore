@@ -101,3 +101,6 @@ build
 
 # sonar scanner
 .scannerwork/
+
+# Base de datos
+tasks.db

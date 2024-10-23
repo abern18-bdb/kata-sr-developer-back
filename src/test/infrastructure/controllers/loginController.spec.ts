@@ -15,7 +15,7 @@ describe('Login Controller', () => {
   it('should return a token for another valid user', async () => {
     const response = await request(app)
       .post('/api/login')
-      .send({ username: 'otro_user', password: 'otro_user' });
+      .send({ username: 'otroUser', password: 'otroUser' });
 
     expect(response.status).toBe(200);
     expect(response.body.token).toBeDefined();
